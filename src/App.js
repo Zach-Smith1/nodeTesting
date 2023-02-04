@@ -1,5 +1,5 @@
-
 import React from "react";
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -28,7 +28,40 @@ class App extends React.Component {
 
   sendCred = (e) => {
     e.preventDefault();
-    alert(`Username = ${this.state.user}, Password = ${this.state.pass}, now we just need to send those to the back end...`)
+    var options = {
+      method: 'get',
+      url: '/users',
+      params: {
+        'username': this.state.user
+      }
+    };
+    axios(options)
+      .then((res) => {
+        if (res.data.data[0].password === this.state.pass) {
+          alert('Successful Login!')
+        } else {
+          alert(`Login Unsuccessful, username and password don\'t match`)
+        }
+      })
+      .catch((error) => {
+        console.log('axios request error', error);
+      });
+  }
+
+  showAll  = (e) => {
+    e.preventDefault();
+    var options = {
+      method: 'get',
+      url: '/users',
+      params: {}
+    };
+    axios(options)
+      .then((res) => {
+        alert(JSON.stringify(res.data.data))
+      })
+      .catch((error) => {
+        console.log('axios request error', error);
+      });
   }
 
   render() {
@@ -42,9 +75,14 @@ class App extends React.Component {
             Testing Testing 123
           </p>
           <input placeholder='Username' onChange={this.userVal}/><br/>
-          <input placeholder='Password' onChange={this.passVal}/><br/>
+          <input type='password' placeholder='Password' onChange={this.passVal}/><br/>
           <button onClick={this.sendCred} style={{'width':'153px'}}>Login</button>
+
         </div>
+        <div id='extra'>
+          <button onClick={this.showAll} style={{'width':'153px'}}>Current Users</button>
+        </div>
+        <div id='notes'>Notes: Next goal is to add Create Account module to add new users to the sqlite database</div>
       </div>
     );
   }

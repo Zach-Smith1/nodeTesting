@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = 3000;
+const url = require('url');
+let sql;
 
 
 const sqlite = require('sqlite3').verbose();
@@ -9,12 +12,17 @@ const db = new sqlite.Database('./user.db', sqlite.OPEN_READWRITE, (err) => {
 })
 
 app.use(express.json())
-
+app.use(express.static(path.join(__dirname, '/../dist')));
 
 app.post('/users', (req, res) => {
-  console.log('posting')
+  console.log('posting...')
   try{
-    console.log(req.query.username, 'added with password:', req.query.password)
+    const { username , password } = req.query;
+    sql = "INSERT INTO user(username, password) VALUES (?,?)";
+    db.run(sql, [username, password], (err) => {
+      if (err) return res.json({status: 300, success: false, error: err });
+      console.log(`successfully added username: ${username} with password: ${password}`);
+    });
     return res.json({
       status: 200,
       success: true
@@ -25,6 +33,28 @@ app.post('/users', (req, res) => {
       success: false
     })
 }})
+
+app.get('/users', (req, res) => {
+  console.log('getting...')
+  sql = `SELECT * FROM user`
+  try {
+    const query = url.parse(req.url, true).query; // query paramaters
+    if (query.username) sql += ` WHERE username = '${query.username}'`
+    db.all(sql, [], (err, rows) => {
+      if (err) return res.json({status: 300, success: false, error: err });
+      return res.json({
+        data: rows,
+        status: 200,
+        success: true
+      });
+    })
+  } catch (error) {
+      return res.json({
+        status: 400,
+        success: false
+    })
+  }
+})
 
 app.listen(port, () => {
   console.log(`listening on port ${port}...`);

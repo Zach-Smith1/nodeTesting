@@ -17,3 +17,19 @@
   justify-self: center;
   width: fit-content;
 }
+#extra {
+  grid-row: 3;
+  grid-column: 1;
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  width: fit-content;
+}
+#notes {
+  grid-row: 3;
+  grid-column: 3;
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  width: fit-content;
+}

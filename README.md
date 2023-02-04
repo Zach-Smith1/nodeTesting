@@ -19,7 +19,26 @@ To create a development build:
 ```sh
 npm run dev
 ```
+## Database
 
+To set up backend first:
+
+```sh
+cd backend
+npm install
+```
+
+Then create table
+
+```sh
+node ./db.js
+```
+
+Then run server
+
+```sh
+node ./app.js
+```
 ## Running
 
-Run locally by opening `dist/index.html` in your browser
+After running above commmands navigate to localhost:3000 in your browser
