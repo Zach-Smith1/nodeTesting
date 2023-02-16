@@ -30,15 +30,17 @@ class App extends React.Component {
     e.preventDefault();
     var options = {
       method: 'get',
-      url: '/users',
+      url: 'http://127.0.0.1:3000/users',
       params: {
         'username': this.state.user
       }
     };
     axios(options)
       .then((res) => {
-        if (res.data.data[0].password === this.state.pass) {
+        if (res.data.data === this.state.pass) {
           alert('Successful Login!')
+        } else if (res.data.data === 'x') {
+          alert('User not found\nUsername is case sensitve.')
         } else {
           alert(`Login Unsuccessful, username and password don\'t match`)
         }
@@ -50,18 +52,20 @@ class App extends React.Component {
 
   showAll  = (e) => {
     e.preventDefault();
-    var options = {
-      method: 'get',
-      url: '/users',
-      params: {}
-    };
-    axios(options)
-      .then((res) => {
-        alert(JSON.stringify(res.data.data))
-      })
-      .catch((error) => {
-        console.log('axios request error', error);
-      });
+    alert('User-Password combinations: \nuser: joeblow password: test\nuser: JohnSmith password: 12345678\nuser: test_user1 password: admin')
+// ************** Old Code Referencing sqlite database *********
+    // var options = {
+    //   method: 'get',
+    //   url: 'http://127.0.0.1:3000/users',
+    //   params: {}
+    // };
+    // axios(options)
+    //   .then((res) => {
+    //     alert(JSON.stringify(res.data.data))
+    //   })
+    //   .catch((error) => {
+    //     console.log('axios request error', error);
+    //   });
   }
 
   render() {

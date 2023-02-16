@@ -41,4 +41,4 @@ node ./app.js
 ```
 ## Running
 
-After running above commmands navigate to localhost:3000 in your browser
+After running above commmands run locally by dragging index.html file into browser or using VSCode Live Server Extension
