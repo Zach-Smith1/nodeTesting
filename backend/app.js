@@ -4,6 +4,10 @@ const app = express();
 const path = require('path');
 const port = 3000;
 const url = require('url');
+
+app.use(cors())
+app.use(express.static(path.join(__dirname, '/../dist')));
+
 // ************* Old Code using sqlite database **************
 // let sql;
 
@@ -12,9 +16,6 @@ const url = require('url');
 // const db = new sqlite.Database('./user.db', sqlite.OPEN_READWRITE, (err) => {
 //   if (err) return console.error(err)
 // })
-
-// app.use(express.json())
-// app.use(express.static(path.join(__dirname, '/../dist')));
 
 // app.post('/users', (req, res) => {
 //   console.log('posting...')
@@ -60,9 +61,6 @@ const url = require('url');
 
 // **************** New Code with switch statements *********
 
-app.use(cors())
-app.use(express.static(path.join(__dirname, '/../dist')));
-
 app.post('/users', (req, res) => {
   console.log('posting...')
   try{
@@ -99,7 +97,7 @@ switch (username) {
 
   try {
     return res.json({
-        data: password,
+        password: password,
         status: 200,
         success: true
       });

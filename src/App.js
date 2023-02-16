@@ -37,10 +37,12 @@ class App extends React.Component {
     };
     axios(options)
       .then((res) => {
-        if (res.data.data === this.state.pass) {
+        if (res.data.password === this.state.pass) {
           alert('Successful Login!')
-        } else if (res.data.data === 'x') {
-          alert('User not found\nUsername is case sensitve.')
+        } else if (res.data.password === 'x') {
+          alert('User not found\nHint: Username is case sensitve.')
+        } else if (this.state.pass === '') {
+          alert('Must enter a password')
         } else {
           alert(`Login Unsuccessful, username and password don\'t match`)
         }
@@ -56,7 +58,7 @@ class App extends React.Component {
 // ************** Old Code Referencing sqlite database *********
     // var options = {
     //   method: 'get',
-    //   url: 'http://127.0.0.1:3000/users',
+    //   url: '/users',
     //   params: {}
     // };
     // axios(options)
@@ -86,7 +88,7 @@ class App extends React.Component {
         <div id='extra'>
           <button onClick={this.showAll} style={{'width':'153px'}}>Current Users</button>
         </div>
-        <div id='notes'>Notes: Next goal is to add Create Account module to add new users to the sqlite database</div>
+        <div id='notes'>Notes: Simple login working as intended</div>
       </div>
     );
   }
