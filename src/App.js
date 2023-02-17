@@ -76,15 +76,14 @@ class App extends React.Component {
         <h1 id='title'>
           Dummy Login
         </h1>
-        <div id='login'>
+        <form onSubmit={this.sendCred} id='login'>
           <p>
             Testing Testing 123
           </p>
           <input placeholder='Username' onChange={this.userVal}/><br/>
-          <input type='password' placeholder='Password' onChange={this.passVal}/><br/>
-          <button onClick={this.sendCred} style={{'width':'153px'}}>Login</button>
-
-        </div>
+          <input type='password' placeholder='Password' onChange={this.passVal} onClick={this.sendCred}/><br/>
+          <input type='submit' style={{'width':'147px'}} value='Login'/>
+        </form>
         <div id='extra'>
           <button onClick={this.showAll} style={{'width':'153px'}}>Current Users</button>
         </div>
